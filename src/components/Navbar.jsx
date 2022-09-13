@@ -1,13 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Navbar = (prop) => {
+const Navbar = (props) => {
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-dark navbar-dark">
+      <nav
+        className={`navbar navbar-expand-lg bg-${props.mode} navbar-${props.mode}`}
+      >
         <div className="container-fluid">
           <a className="navbar-brand" href="/">
-            {prop.title}
+            {props.title}
           </a>
           <button
             className="navbar-toggler"
@@ -34,9 +36,22 @@ const Navbar = (prop) => {
               </li>
             </ul>
             <form className="d-flex" role="search">
-              <button className="btn btn-outline-success" type="submit">
-                Login
-              </button>
+              <div class="form-check form-switch">
+                <input
+                  class="form-check-input"
+                  style={{ cursor: "pointer" }}
+                  type="checkbox"
+                  role="switch"
+                  id="flexSwitchCheckDefault"
+                  onClick={props.toggleMode}
+                />
+                <label
+                  class="form-check-label text-light"
+                  for="flexSwitchCheckDefault"
+                >
+                  Enable Dark Mode
+                </label>
+              </div>
             </form>
           </div>
         </div>

@@ -23,6 +23,14 @@ const TextForm = (props) => {
     const newText = enteredText.split(/[ ]+/);
     setEnteredText(newText.join(" "));
   };
+
+  // Function for coping the entire text
+  const copyTextCHandler = () => {
+    const inpText = document.getElementById("enteredText");
+    inpText.select();
+    navigator.clipboard.writeText(inpText.value);
+  };
+
   return (
     <>
       <div className="container">
@@ -42,6 +50,9 @@ const TextForm = (props) => {
         </button>
         <button className="btn btn-primary mx-2" onClick={clrTextHandler}>
           Clear Text
+        </button>
+        <button className="btn btn-primary mx-2" onClick={copyTextCHandler}>
+          Copy Text
         </button>
         <button className="btn btn-primary " onClick={removeSpaceHandler}>
           Remove Extra Spaces
