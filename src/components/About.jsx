@@ -1,30 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 
-const About = () => {
-  const [bgStyle, setBgStyle] = useState({
-    backgroundColor: "#fff",
-    color: "#000",
-  });
-
-  const bgChangeHandler = () => {
-    if (bgStyle.color === "#fff") {
-      setBgStyle({
-        backgroundColor: "#fff",
-        color: "#000",
-      });
-    } else {
-      setBgStyle({
-        backgroundColor: "#fff",
-        color: "#000",
-      });
-    }
+const About = (props) => {
+  const changeStyle = {
+    backgroundColor: props.toggleMode === "dark" ? "#222222" : "#fff",
+    color: props.toggleMode === "dark" ? "#fff" : "#222222",
   };
   return (
     <>
-      <div className="container" style={bgStyle}>
+      <div className="container">
         <h2 className="text-center my-4 text-primary">About Us</h2>
-        <div className="accordion accordion-flush" id="accordionFlushExample">
-          <div className="accordion-item">
+        <div
+          className="accordion accordion-flush"
+          id="accordionFlushExample"
+          style={{
+            border:
+              props.toggleMode === "dark" ? "1px solid #fff" : "1px solid #000",
+          }}
+        >
+          <div className="accordion-item" style={changeStyle}>
             <h2 className="accordion-header" id="flush-headingOne">
               <button
                 className="accordion-button collapsed"
@@ -33,7 +26,7 @@ const About = () => {
                 data-bs-target="#flush-collapseOne"
                 aria-expanded="false"
                 aria-controls="flush-collapseOne"
-                style={bgStyle}
+                style={changeStyle}
               >
                 Functionalities
               </button>
@@ -44,7 +37,7 @@ const About = () => {
               aria-labelledby="flush-headingOne"
               data-bs-parent="#accordionFlushExample"
             >
-              <div className="accordion-body" style={bgStyle}>
+              <div className="accordion-body">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Voluptatum, ullam. Velit, harum. Deserunt id possimus, qui,
                 quaerat laudantium debitis nostrum, veritatis doloribus hic
@@ -52,7 +45,7 @@ const About = () => {
               </div>
             </div>
           </div>
-          <div className="accordion-item">
+          <div className="accordion-item" style={changeStyle}>
             <h2 className="accordion-header" id="flush-headingTwo">
               <button
                 className="accordion-button collapsed"
@@ -61,7 +54,7 @@ const About = () => {
                 data-bs-target="#flush-collapseTwo"
                 aria-expanded="false"
                 aria-controls="flush-collapseTwo"
-                style={bgStyle}
+                style={changeStyle}
               >
                 Accessibilties
               </button>
@@ -72,7 +65,7 @@ const About = () => {
               aria-labelledby="flush-headingTwo"
               data-bs-parent="#accordionFlushExample"
             >
-              <div className="accordion-body" style={bgStyle}>
+              <div className="accordion-body">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Voluptatum, ullam. Velit, harum. Deserunt id possimus, qui,
                 quaerat laudantium debitis nostrum, veritatis doloribus hic
@@ -80,7 +73,7 @@ const About = () => {
               </div>
             </div>
           </div>
-          <div className="accordion-item">
+          <div className="accordion-item" style={changeStyle}>
             <h2 className="accordion-header" id="flush-headingThree">
               <button
                 className="accordion-button collapsed"
@@ -89,7 +82,7 @@ const About = () => {
                 data-bs-target="#flush-collapseThree"
                 aria-expanded="false"
                 aria-controls="flush-collapseThree"
-                style={bgStyle}
+                style={changeStyle}
               >
                 Rules
               </button>
@@ -100,7 +93,7 @@ const About = () => {
               aria-labelledby="flush-headingThree"
               data-bs-parent="#accordionFlushExample"
             >
-              <div className="accordion-body" style={bgStyle}>
+              <div className="accordion-body">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Voluptatum, ullam. Velit, harum. Deserunt id possimus, qui,
                 quaerat laudantium debitis nostrum, veritatis doloribus hic
@@ -111,17 +104,6 @@ const About = () => {
               </div>
             </div>
           </div>
-        </div>
-
-        <div className="form-check form-switch">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            role="switch"
-            id="toggle__btn"
-            style={{ cursor: "pointer" }}
-            onClick={bgChangeHandler}
-          />
         </div>
       </div>
     </>

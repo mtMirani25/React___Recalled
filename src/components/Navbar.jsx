@@ -36,9 +36,9 @@ const Navbar = (props) => {
               </li>
             </ul>
             <form className="d-flex" role="search">
-              <div class="form-check form-switch">
+              <div className="form-check form-switch">
                 <input
-                  class="form-check-input"
+                  className="form-check-input"
                   style={{ cursor: "pointer" }}
                   type="checkbox"
                   role="switch"
@@ -46,8 +46,12 @@ const Navbar = (props) => {
                   onClick={props.toggleMode}
                 />
                 <label
-                  class="form-check-label text-light"
-                  for="flexSwitchCheckDefault"
+                  className={`${
+                    props.mode === "light"
+                      ? "form-check-label text-dark"
+                      : "form-check-label text-light"
+                  }`}
+                  htmlFor="flexSwitchCheckDefault"
                 >
                   Enable Dark Mode
                 </label>
