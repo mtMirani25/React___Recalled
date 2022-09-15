@@ -30,15 +30,19 @@ const TextForm = (props) => {
   // Function for coping the entire text
   const copyTextCHandler = () => {
     const inpText = document.getElementById("enteredText");
+    // this select() method used to select the entire text
     inpText.select();
     navigator.clipboard.writeText(inpText.value);
+
+    // text not show as blue backgroundColor when we select it
+    document.getSelection().removeAllRanges();
     props.alertShow("Text is copied successfully!", "success");
   };
 
   return (
     <>
       <div className="container">
-        <div className="mb-3">
+        <div className="mb-2">
           <h1 className="text-primary">{props.heading}</h1>
           <textarea
             className="form-control"
@@ -53,16 +57,32 @@ const TextForm = (props) => {
             }}
           ></textarea>
         </div>
-        <button className="btn btn-primary " onClick={upperCaseHandler}>
+        <button
+          className="btn btn-primary my-1 mx-1"
+          onClick={upperCaseHandler}
+          disabled={enteredText.length === 0}
+        >
           Convert to UpperCase
         </button>
-        <button className="btn btn-primary mx-2" onClick={clrTextHandler}>
+        <button
+          className="btn btn-primary my-1 mx-1"
+          onClick={clrTextHandler}
+          disabled={enteredText.length === 0}
+        >
           Clear Text
         </button>
-        <button className="btn btn-primary mx-2" onClick={copyTextCHandler}>
+        <button
+          className="btn btn-primary my-1 mx-1"
+          onClick={copyTextCHandler}
+          disabled={enteredText.length === 0}
+        >
           Copy Text
         </button>
-        <button className="btn btn-primary " onClick={removeSpaceHandler}>
+        <button
+          className="btn btn-primary my-1 mx-1"
+          onClick={removeSpaceHandler}
+          disabled={enteredText.length === 0}
+        >
           Remove Extra Spaces
         </button>
       </div>
@@ -74,12 +94,23 @@ const TextForm = (props) => {
       >
         <h1>Summary of your text</h1>
         <p>
-          {enteredText.length > 0 ? enteredText.split(" ").length : ""} words
-          and {enteredText.length} characters.
+          {` ${
+            enteredText.length > 0
+              ? enteredText.split(" ").filter((index) => {
+                  return index.length !== 0;
+                }).length
+              : " 0 "
+          }
+          words and ${enteredText.length} characters.`}
         </p>
         <small>
-          It will take {0.008 * enteredText.split(" ").length} minutes to read
-          the given text.
+          {`It will take
+          ${
+            enteredText.length > 0
+              ? 0.008 * enteredText.split(" ").length
+              : " 0 "
+          }
+          minutes to read the given text.`}
         </small>
 
         <h4>Preview your text</h4>

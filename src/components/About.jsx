@@ -28,7 +28,7 @@ const About = (props) => {
                 aria-controls="flush-collapseOne"
                 style={changeStyle}
               >
-                Functionalities
+                <strong>Functionalities</strong>
               </button>
             </h2>
             <div
@@ -56,7 +56,7 @@ const About = (props) => {
                 aria-controls="flush-collapseTwo"
                 style={changeStyle}
               >
-                Accessibilties
+                <strong>Accessibilties</strong>
               </button>
             </h2>
             <div
@@ -84,7 +84,7 @@ const About = (props) => {
                 aria-controls="flush-collapseThree"
                 style={changeStyle}
               >
-                Rules
+                <strong>Rules</strong>
               </button>
             </h2>
             <div

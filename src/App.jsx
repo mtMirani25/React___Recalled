@@ -3,6 +3,7 @@ import About from "./components/About";
 import Alert from "./components/Alert";
 import Navbar from "./components/Navbar";
 import TextForm from "./components/TextForm";
+import { Routes, Route } from "react-router-dom";
 
 const App = () => {
   const [mode, setMode] = useState("light");
@@ -36,13 +37,21 @@ const App = () => {
     <>
       <Navbar title="Twist" mode={mode} toggleMode={toggleModeHandler} />
       <Alert alert={showAlert} />
-      <div className="my-5">
-        <TextForm
-          heading="Enter the text below for transformation"
-          toggleMode={mode}
-          alertShow={showAlertHandler}
-        />
-        <About toggleMode={mode} />
+      <div className="my-3">
+        <Routes>
+          <Route
+            exact
+            path="/"
+            element={
+              <TextForm
+                heading="Enter the text below for transformation"
+                toggleMode={mode}
+                alertShow={showAlertHandler}
+              />
+            }
+          />
+          <Route exact path="/about" element={<About toggleMode={mode} />} />
+        </Routes>
       </div>
     </>
   );
