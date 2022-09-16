@@ -17,25 +17,20 @@ const TextForm = (props) => {
   // function for clear the entered text
   const clrTextHandler = () => {
     setEnteredText("");
-    props.alertShow("All text clear!", "danger");
+    props.alertShow("All inputed text clear!", "danger");
   };
 
   // function for remove the extra spaces
   const removeSpaceHandler = () => {
-    const newText = enteredText.split(/[ ]+/);
+    const newText = enteredText.split(/\s+/);
     setEnteredText(newText.join(" "));
     props.alertShow("Remove all extra spaces successfully!", "primary");
   };
 
   // Function for coping the entire text
   const copyTextCHandler = () => {
-    const inpText = document.getElementById("enteredText");
-    // this select() method used to select the entire text
-    inpText.select();
-    navigator.clipboard.writeText(inpText.value);
-
-    // text not show as blue backgroundColor when we select it
-    document.getSelection().removeAllRanges();
+    // copy all the entered text into clipboard
+    navigator.clipboard.writeText(enteredText);
     props.alertShow("Text is copied successfully!", "success");
   };
 
@@ -96,28 +91,29 @@ const TextForm = (props) => {
         <p>
           {` ${
             enteredText.length > 0
-              ? enteredText.split(" ").filter((index) => {
+              ? enteredText.split(/\s/g).filter((index) => {
                   return index.length !== 0;
                 }).length
               : " 0 "
           }
-          words and ${enteredText.length} characters.`}
+           
+          words and ${enteredText.replace(/\s/g, "").length} characters.`}
+          {/* use the /\s/g quantifier to remove all white space from the string */}
         </p>
         <small>
           {`It will take
           ${
-            enteredText.length > 0
-              ? 0.008 * enteredText.split(" ").length
-              : " 0 "
+            0.008 *
+            enteredText.split(" ").filter((index) => {
+              return index.length !== 0;
+            }).length
           }
           minutes to read the given text.`}
         </small>
 
-        <h4>Preview your text</h4>
+        <h4 className="mt-3 mb-0">Preview your text</h4>
         <small>
-          {enteredText.length <= 0
-            ? "Enter your text for preview"
-            : enteredText}
+          {enteredText.length <= 0 ? "Nothing for Preview" : enteredText}
         </small>
       </div>
     </>
