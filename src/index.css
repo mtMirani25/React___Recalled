@@ -4,6 +4,38 @@
   box-sizing: border-box;
 }
 
-/* .accordion-button::after {
-  filter: invert(1);
-} */
+:root {
+  --color-primary: #6c63ff;
+  --color-white: #fff;
+  --color-bg: #1f2646;
+  --color-bg1: #2e3268;
+  --color-bg2: #424890;
+
+  --transition: all 400ms ease;
+
+  --container-width-lg: 80%;
+  --container-width-md: 90%;
+  --container-width-sm: 94%;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-white);
+}
+
+.container1 {
+  width: var(--container-width-lg);
+  margin: 0 auto;
+}
+
+@media screen and (max-width: 992px) {
+  .container1 {
+    width: var(--container-width-md);
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .container1 {
+    width: var(--container-width-sm);
+  }
+}
