@@ -13,7 +13,7 @@
 
   --transition: all 400ms ease;
 
-  --container-width-lg: 80%;
+  --container-width-lg: 85%;
   --container-width-md: 90%;
   --container-width-sm: 94%;
 }
@@ -28,14 +28,28 @@ body {
   margin: 0 auto;
 }
 
+#main__heading {
+  margin: 5rem 0 1rem;
+  font-size: 2rem;
+  user-select: none;
+}
+
 @media screen and (max-width: 992px) {
   .container1 {
     width: var(--container-width-md);
+  }
+
+  #main__heading {
+    font-size:1.5rem;
   }
 }
 
 @media screen and (max-width: 650px) {
   .container1 {
     width: var(--container-width-sm);
+  }
+
+  #main__heading {
+    font-size: 20px;
   }
 }

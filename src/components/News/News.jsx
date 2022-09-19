@@ -282,29 +282,66 @@ export class News extends Component {
   // Constructor used for getting the state
   constructor() {
     super();
-    console.log("This is from constructor");
     this.state = {
       article: this.articles,
+      page: 1,
     };
   }
 
   async componentDidMount() {
-    let url =
-      "https://newsapi.org/v2/top-headlines?country=us&apiKey=8636ac2a9dee4fb5be8f7cebd4ad8f99";
+    let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=8636ac2a9dee4fb5be8f7cebd4ad8f99&pageSize=${this.props.pageSize}`;
 
     let data = await fetch(url);
     let parseData = await data.json();
-    console.log(parseData);
 
-    this.setState({ article: parseData.articles });
+    this.setState({
+      article: parseData.articles,
+      totalResults: parseData.totalResults,
+    });
   }
+
+  // function for handling next page
+  nextHandler = async () => {
+    if (
+      this.state.page + 1 >
+      Math.ceil(this.state.totalResults / this.props.pageSize)
+    ) {
+    } else {
+      let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=8636ac2a9dee4fb5be8f7cebd4ad8f99&page=${
+        this.state.page + 1
+      }&pageSize=${this.props.pageSize}`;
+
+      let data = await fetch(url);
+      let parseData = await data.json();
+
+      this.setState({
+        page: this.state.page + 1,
+        article: parseData.articles,
+      });
+    }
+  };
+
+  // function for handling Previous page
+  prevHandler = async () => {
+    let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=8636ac2a9dee4fb5be8f7cebd4ad8f99&page=${
+      this.state.page - 1
+    }&pageSize=${this.props.pageSize}`;
+
+    let data = await fetch(url);
+    let parseData = await data.json();
+
+    this.setState({
+      page: this.state.page - 1,
+      article: parseData.articles,
+    });
+  };
+
   render() {
     return (
       <>
         <h2 className="my-4 text-center ">NewsMonkey - Top Headlines</h2>
         <div className="container1 news__container">
           {this.state.article.map((item, index) => {
-            // console.log(item);
             return (
               <NewsItem
                 key={index}
@@ -317,6 +354,26 @@ export class News extends Component {
               />
             );
           })}
+        </div>
+
+        <div className="container1 d-flex justify-content-between my-5">
+          <button
+            disabled={this.state.page <= 1}
+            className="btn btn-sm btn-primary"
+            onClick={this.prevHandler}
+          >
+            Previous
+          </button>
+          <button
+            className="btn btn-sm btn-primary"
+            onClick={this.nextHandler}
+            disabled={
+              this.state.page + 1 >
+              Math.ceil(this.state.totalResults / this.props.pageSize)
+            }
+          >
+            Next
+          </button>
         </div>
       </>
     );
