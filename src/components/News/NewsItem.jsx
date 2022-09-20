@@ -4,8 +4,10 @@ import "./NewsItem.css";
 export class NewsItem extends Component {
   render() {
     // getting props here
-    let { title, description, imgUrl, newsUrl } = this.props;
+    let { title, description, imgUrl, newsUrl, author, date } = this.props;
 
+    // get date with GMT
+    let newDate = new Date(date).toUTCString();
     return (
       <>
         <section className="news">
@@ -24,10 +26,13 @@ export class NewsItem extends Component {
 
               <div className="news__info">
                 <h5>{title}</h5>
+                <small id="date">
+                  By {author === null ? "Mike Miller" : author} on {newDate}
+                </small>
                 <p>
-                  {!description
-                    ? "Even the heavy rainfall couldn't erase the smell of death in the pine forest in"
-                    : description}
+                  {description
+                    ? description
+                    : "Even the heavy rainfall couldn't erase the smell of death in the pine forest in"}
                 </p>
                 <a
                   href={newsUrl}

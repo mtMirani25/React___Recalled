@@ -1,7 +1,22 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
+import Spinner from "./Spinner";
+import PropTypes from "prop-types";
 
 export class News extends Component {
+  // defaultProps if component didn't get props from another component
+  static defaultProps = {
+    country: "us",
+    pageSize: 12,
+    category: "general",
+  };
+
+  // defaultProps data types
+  static propTypes = {
+    country: PropTypes.string,
+    pageSize: PropTypes.number,
+    category: PropTypes.string,
+  };
   articles = [
     {
       source: { id: null, name: "CBS Sports" },
@@ -279,81 +294,125 @@ export class News extends Component {
     },
   ];
 
-  // Constructor used for getting the state
-  constructor() {
-    super();
+  // Constructor used for handling the state
+  constructor(props) {
+    super(props);
+
+    // initial state
     this.state = {
       article: this.articles,
       page: 1,
+      loading: false,
     };
   }
 
+  // code display on the output after render code show it's output
   async componentDidMount() {
-    let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=8636ac2a9dee4fb5be8f7cebd4ad8f99&pageSize=${this.props.pageSize}`;
-
+    this.props.changeProgress(10);
+    let url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.category}&apiKey=8636ac2a9dee4fb5be8f7cebd4ad8f99&pageSize=${this.props.pageSize}`;
+    this.setState({ loading: true });
     let data = await fetch(url);
+    this.props.changeProgress(30);
     let parseData = await data.json();
-
+    this.props.changeProgress(70);
     this.setState({
       article: parseData.articles,
       totalResults: parseData.totalResults,
+      loading: false,
     });
+    this.props.changeProgress(100);
+
+    // ---> alternate code
+    // await fetch(url)
+    //   .then((response) => {
+    //     return response.json();
+    //   })
+    //   .then((result) => {
+    //     this.setState({
+    //       article: result.articles,
+    //       totalResults: result.totalResults,
+    //       loading: false,
+    //     });
+    //   });
   }
 
   // function for handling next page
   nextHandler = async () => {
+    // this code manage the pages
     if (
-      this.state.page + 1 >
-      Math.ceil(this.state.totalResults / this.props.pageSize)
+      !(
+        this.state.page + 1 >
+        Math.ceil(this.state.totalResults / this.props.pageSize)
+      )
     ) {
-    } else {
-      let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=8636ac2a9dee4fb5be8f7cebd4ad8f99&page=${
+      let url = `https://newsapi.org/v2/top-headlines?country=${
+        this.props.country
+      }&category=${
+        this.props.category
+      }&apiKey=8636ac2a9dee4fb5be8f7cebd4ad8f99&page=${
         this.state.page + 1
       }&pageSize=${this.props.pageSize}`;
 
       let data = await fetch(url);
+      this.setState({ loading: true });
       let parseData = await data.json();
 
       this.setState({
         page: this.state.page + 1,
         article: parseData.articles,
+        loading: false,
       });
     }
   };
 
   // function for handling Previous page
   prevHandler = async () => {
-    let url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=8636ac2a9dee4fb5be8f7cebd4ad8f99&page=${
+    let url = `https://newsapi.org/v2/top-headlines?country=${
+      this.props.country
+    }&category=${
+      this.props.category
+    }&apiKey=8636ac2a9dee4fb5be8f7cebd4ad8f99&page=${
       this.state.page - 1
     }&pageSize=${this.props.pageSize}`;
 
     let data = await fetch(url);
+    this.setState({ loading: true });
     let parseData = await data.json();
 
     this.setState({
       page: this.state.page - 1,
       article: parseData.articles,
+      loading: false,
     });
   };
 
   render() {
+    let { category } = this.props;
+    let categoryName = category.charAt(0).toUpperCase() + category.slice(1);
+
     return (
       <>
-        <h2 className="my-4 text-center ">NewsMonkey - Top Headlines</h2>
+        <h2 className="my-4 text-center ">
+          NewsMonkey - {categoryName} Top Headlines
+        </h2>
+        {this.state.loading && <Spinner />}
         <div className="container1 news__container">
-          {this.state.article.map((item, index) => {
-            return (
-              <NewsItem
-                key={index}
-                title={item.title ? item.title.slice(0, 20) : ""}
-                description={
-                  item.description ? item.description.slice(0, 80) : ""
-                }
-                imgUrl={item.urlToImage}
-                newsUrl={item.url}
-              />
-            );
-          })}
+          {!this.state.loading &&
+            this.state.article.map((item, index) => {
+              return (
+                <NewsItem
+                  key={index}
+                  title={item.title ? item.title.slice(0, 20) : ""}
+                  description={
+                    item.description ? item.description.slice(0, 80) : ""
+                  }
+                  imgUrl={item.urlToImage}
+                  newsUrl={item.url}
+                  date={item.publishedAt}
+                  author={item.author}
+                />
+              );
+            })}
         </div>
 
         <div className="container1 d-flex justify-content-between my-5">

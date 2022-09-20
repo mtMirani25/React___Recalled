@@ -25,6 +25,12 @@
   height: 30vh;
 }
 
+#date {
+  font-size: 13px;
+  color: lightblue;
+  user-select: none;
+}
+
 .news__info {
   padding: 1rem;
 }
