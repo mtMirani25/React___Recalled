@@ -35,6 +35,19 @@ export default class App extends Component {
           />
           <Route
             exact
+            path="/general"
+            element={
+              <News
+                changeProgress={this.setProgress}
+                key="general"
+                pageSize={12}
+                category="general"
+                country="us"
+              />
+            }
+          />
+          <Route
+            exact
             path="/entertainment"
             element={
               <News
