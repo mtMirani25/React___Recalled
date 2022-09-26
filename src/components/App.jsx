@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import About from "./components/About";
-import Alert from "./components/Alert";
-import Navbar from "./components/Navbar";
-import TextForm from "./components/TextForm";
+import About from "./About";
+import Alert from "./Alert";
+import Navbar from "./Navbar";
+import TextForm from "./TextForm";
 import { Routes, Route } from "react-router-dom";
 
 const App = () => {
@@ -35,7 +35,7 @@ const App = () => {
 
   return (
     <>
-      <Navbar title="Twist" mode={mode} toggleMode={toggleModeHandler} />
+      <Navbar title="TextMonkey" mode={mode} toggleMode={toggleModeHandler} />
       <Alert alert={showAlert} />
       <div className="my-3">
         <Routes>

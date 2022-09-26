@@ -38,7 +38,9 @@ const TextForm = (props) => {
     <>
       <div className="container">
         <div className="mb-2">
-          <h1 className="text-primary">{props.heading}</h1>
+          <h1 className="text-primary mb-4 text-center" id="main__heading">
+            {props.heading}
+          </h1>
           <textarea
             className="form-control"
             id="enteredText"
@@ -53,28 +55,28 @@ const TextForm = (props) => {
           ></textarea>
         </div>
         <button
-          className="btn btn-primary my-1 mx-1"
+          className="btn btn-sm btn-primary my-1 mx-1"
           onClick={upperCaseHandler}
           disabled={enteredText.length === 0}
         >
           Convert to UpperCase
         </button>
         <button
-          className="btn btn-primary my-1 mx-1"
+          className="btn btn-sm btn-primary my-1 mx-1"
           onClick={clrTextHandler}
           disabled={enteredText.length === 0}
         >
           Clear Text
         </button>
         <button
-          className="btn btn-primary my-1 mx-1"
+          className="btn btn-sm btn-primary my-1 mx-1"
           onClick={copyTextCHandler}
           disabled={enteredText.length === 0}
         >
           Copy Text
         </button>
         <button
-          className="btn btn-primary my-1 mx-1"
+          className="btn btn-sm btn-primary my-1 mx-1"
           onClick={removeSpaceHandler}
           disabled={enteredText.length === 0}
         >
@@ -87,7 +89,7 @@ const TextForm = (props) => {
           props.toggleMode === "dark" ? "light" : "dark"
         }`}`}
       >
-        <h1>Summary of your text</h1>
+        <h1 id="summary__heading">Summary of your text</h1>
         <p>
           {` ${
             enteredText.length > 0
@@ -100,7 +102,7 @@ const TextForm = (props) => {
           words and ${enteredText.replace(/\s/g, "").length} characters.`}
           {/* use the /\s/g quantifier to remove all white space from the string */}
         </p>
-        <small>
+        <p>
           {`It will take
           ${
             0.008 *
@@ -109,12 +111,10 @@ const TextForm = (props) => {
             }).length
           }
           minutes to read the given text.`}
-        </small>
+        </p>
 
-        <h4 className="mt-3 mb-0">Preview your text</h4>
-        <small>
-          {enteredText.length <= 0 ? "Nothing for Preview" : enteredText}
-        </small>
+        <h4 className="mt-3 mb-1">Preview your text</h4>
+        <p>{enteredText.length <= 0 ? "Nothing for Preview" : enteredText}</p>
       </div>
     </>
   );
