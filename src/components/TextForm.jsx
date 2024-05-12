@@ -47,7 +47,7 @@ const TextForm = (props) => {
             rows="7"
             value={enteredText}
             onChange={onChangeHandler}
-            placeholder="Enter your text here"
+            placeholder="Enter your text here..."
             style={{
               backgroundColor: props.toggleMode === "dark" ? "#222222" : "#fff",
               color: props.toggleMode === "dark" ? "#fff" : "#222222",

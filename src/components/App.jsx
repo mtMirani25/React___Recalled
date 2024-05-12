@@ -35,7 +35,7 @@ const App = () => {
 
   return (
     <>
-      <Navbar title="TextMonkey" mode={mode} toggleMode={toggleModeHandler} />
+      <Navbar title="Text Monkey2" mode={mode} toggleMode={toggleModeHandler} />
       <Alert alert={showAlert} />
       <div className="my-3">
         <Routes>
